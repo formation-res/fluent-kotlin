@@ -37,16 +37,16 @@ fun FluentBundle.translate(id: String, args: Json? = null) : String {
     }
 }
 
-fun BundleSequence.translate(id: String, args: Json? = null) : String {
+fun BundleSequence.translate(id: String, fallback: String=id,args: Json? = null) : String {
     val bundle = findBundle(id)
     if(bundle == null) {
         console.error("$id not found in any bundle")
-        return id
+        return fallback
     }
     check(bundle.hasMessage(id)) { "message $id not found in bundle" }
     val message = bundle.getMessage(id) ?: run {
         console.error("message", id, "not found in bundle", bundle.locales)
-        return  "ERROR translating $id"
+        return fallback
     }
     return when (val messageValue = message.value) {
         is String -> messageValue
@@ -55,7 +55,7 @@ fun BundleSequence.translate(id: String, args: Json? = null) : String {
                 bundle.formatPattern(messageValue, args)
             } catch (e: Throwable) {
                 console.error("error processing translation for $id: ${e.message}")
-                id
+                fallback
             }
         }
         else -> {
@@ -71,8 +71,7 @@ fun BundleSequence.getMessage(id: String) : Message? {
 }
 
 fun BundleSequence.translate(translatable: Translatable, args: Json? = null) : String {
-    val id = translatable.messageId
-    return translate(id, args)
+    return translate(translatable.messageId, fallback = translatable.name, args)
 }
 
 fun BundleSequence.findBundle(id: String): FluentBundle? {

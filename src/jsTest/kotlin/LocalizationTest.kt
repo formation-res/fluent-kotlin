@@ -50,7 +50,7 @@ class LocalizationTest {
 
             french.translate(bye) shouldBe "Au Revoir"
             french.translate(wtf.messageId) shouldBe "What The Fuck"
-            french.translate(nope) shouldBe nope.messageId
+            french.translate(nope) shouldBe nope.name
         }
     }
 }
