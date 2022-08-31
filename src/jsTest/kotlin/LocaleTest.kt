@@ -1,6 +1,5 @@
 import com.tryformation.fluent.getMessage
-import com.tryformation.localization.Locale
-import com.tryformation.localization.Localization
+import com.tryformation.localization.LocalizationService
 import com.tryformation.localization.Translatable
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.withClue
@@ -9,24 +8,8 @@ import io.kotest.matchers.shouldNotBe
 import kotlin.test.Test
 
 class LocaleTest {
-    enum class LocaleNames : Translatable {
-        EN_GB,
-        NL_NL,
-        ;
 
-        override val prefix: String = "locale"
-    }
-
-    enum class TestLocale(
-        override val id: String,
-        override val translatable: Translatable,
-        override val aliases: Array<String>,
-    ) : Locale {
-        EN_GB("en-GB", LocaleNames.EN_GB, arrayOf("en")),
-        NL_NL("nl-NL", LocaleNames.NL_NL, arrayOf("nl")),
-    }
-
-    private val localesToTest = TestLocale.values()
+    private val localesToTest = TestLocales.values()
 
     val ftl = mapOf(
         "en-GB" to """
@@ -44,13 +27,15 @@ class LocaleTest {
             demo-search-button = Zoeken
             demo-empty-search = Nog niks gevonden. Klik op Zoeken?
             demo-found-results = {${'$'}amount} resultaten gevonden!
-        """.trimIndent()
+        """.trimIndent(),
+        "fr-FR" to  "" // empty
     )
 
-    private val localization = Localization(localesToTest) { locale ->
+    val fetch: suspend (locale: String) -> String? = { locale ->
         console.asDynamic().debug("fetching locale", locale)
-        ftl[locale.id] ?: error("missing locale ${locale.id}")
+        ftl[locale] ?: error("missing locale ${locale}")
     }
+    private val localizationService = LocalizationService(localesToTest, fetch)
 
     object TL {
         val translatables: List<Translatable> = listOf(
@@ -73,8 +58,8 @@ class LocaleTest {
     fun verifyKeysExist() = runTest("verify message id exists") {
         assertSoftly {
             localesToTest.forEach { locale ->
-                val bundleSequence = localization.loadBundleSequence(listOf(locale))
-                val bundleSequenceWithoutFallback = localization.loadBundleSequence(listOf(locale), fallback = null)
+                val bundleSequence = LocalizationService.loadBundleSequence(listOf(locale.id, TestLocales.EN_GB.id),fetch =fetch)
+                val bundleSequenceWithoutFallback = LocalizationService.loadBundleSequence(listOf(locale.id), fallback = null, fetch =fetch)
                 TL.translatables.forEach { translatable ->
                     withClue("$locale missing '${translatable.messageId}'") {
                         val message = bundleSequence.getMessage(translatable.messageId)
@@ -100,14 +85,15 @@ class LocaleTest {
         val translatable = TestTranslations.SHOULD_FAIL
         localesToTest.forEach { locale ->
 
-            val bundle = localization.loadBundle(locale)
-            val bundleSequence = localization.loadBundleSequence(listOf(locale))
+            val bundle = LocalizationService.loadBundle(locale.id, fetch=fetch)
+            bundle shouldNotBe null
+            val bundleSequence = LocalizationService.loadBundleSequence(listOf(locale.id), fetch = fetch)
 
             withClue("error: message id '${translatable.messageId}' is not missing?") {
                 val message = bundleSequence.getMessage(translatable.messageId)
                 message shouldBe null
             }
-            val hasMessage = bundle.hasMessage(translatable.messageId)
+            val hasMessage = bundle!!.hasMessage(translatable.messageId)
             if (hasMessage) {
                 console.error("WARN: '${translatable.messageId}' should not be available in $locale")
             }

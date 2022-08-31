@@ -1,4 +1,6 @@
-import com.tryformation.fluent.*
+import com.tryformation.fluent.FluentBundle
+import com.tryformation.fluent.FluentResource
+import com.tryformation.fluent.translate
 import io.kotest.matchers.shouldBe
 import kotlin.js.json
 import kotlin.test.Test
