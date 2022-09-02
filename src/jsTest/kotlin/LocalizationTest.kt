@@ -1,7 +1,6 @@
-import BasicStrings.bye
-import BasicStrings.nope
+import BasicStrings.*
 import com.tryformation.fluent.translate
-import com.tryformation.localization.Localization
+import com.tryformation.localization.LocalizationService
 import com.tryformation.localization.Translatable
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
@@ -10,62 +9,48 @@ import kotlin.test.Test
 enum class BasicStrings : Translatable {
     hello,
     bye,
-    nope
+    nope,
+    wtf
     ;
 
-    override val prefix: String = "basic"
-}
-enum class LocaleStrings : Translatable {
-    EN_GB,
-    FR_FR,
-    ;
-
-    override val prefix: String = "locale"
+    override val prefix: String = "pre"
 }
 
 class LocalizationTest {
-    private enum class TestLocale(
-        override val id: String,
-        override val translatable: Translatable,
-        override val aliases: Array<String>,
-    ): com.tryformation.localization.Locale {
-        EN_GB("en-GB", LocaleStrings.EN_GB, arrayOf("en")),
-        FR_FR("fr-FR", LocaleStrings.FR_FR, arrayOf("fr")),
-        ;
-    }
     val ftl = mapOf("en-GB" to """
-            basic-hello = Oh Hai
-            basic-bye = OKAY BYE THEN!
-            basic-wtf = What The Fuck
+            pre-hello = Oh Hai
+            pre-bye = OKAY BYE THEN!
+            pre-wtf = What The Fuck
         """.trimIndent(),
         "fr-FR" to """
-            basic-hello = Bonjour
-            basic-bye = Au Revoir
+            pre-hello = Bonjour
+            pre-bye = Au Revoir
         """.trimIndent()
     )
 
-    private val localization = Localization(
-        locales = TestLocale.values(),
-        fetch = { locale ->
-            console.asDynamic().debug("fetching locale", locale)
-            ftl[locale.id] ?: error("failed too get locale for id ${locale.id}")
-        }
+    val fetch: suspend (locale: String) -> String? = { locale ->
+        console.asDynamic().debug("fetching locale", locale)
+        ftl[locale] ?: error("failed too get locale for id ${locale}")
+    }
+    private val localizationService = LocalizationService(
+        locales = TestLocales.values(),
+        fetch = fetch
     )
 
 
     @Test
     fun shouldTranslate() = runTest("shouldTranslate") {
 
-        val english = localization.loadBundleSequence(listOf(TestLocale.EN_GB))
-        val french = localization.loadBundleSequence(listOf(TestLocale.FR_FR), TestLocale.EN_GB)
+        val english = LocalizationService.loadBundleSequence(listOf(TestLocales.EN_GB.id), fetch = fetch)
+        val french = LocalizationService.loadBundleSequence(listOf(TestLocales.FR_FR.id), TestLocales.EN_GB.id, fetch = fetch)
 
         // six ways to get a translation :-)
         assertSoftly {
             english.translate(bye) shouldBe "OKAY BYE THEN!"
 
             french.translate(bye) shouldBe "Au Revoir"
-            french.translate("basic-wtf") shouldBe "What The Fuck"
-            french.translate(nope) shouldBe nope.messageId
+            french.translate(wtf.messageId) shouldBe "What The Fuck"
+            french.translate(nope) shouldBe nope.name
         }
     }
 }

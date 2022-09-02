@@ -1,4 +1,6 @@
-import com.tryformation.fluent.*
+import com.tryformation.fluent.FluentBundle
+import com.tryformation.fluent.FluentResource
+import com.tryformation.fluent.translate
 import io.kotest.matchers.shouldBe
 import kotlin.js.json
 import kotlin.test.Test
@@ -49,15 +51,15 @@ class FluentTest {
     @Test
     fun testWelcome() {
         val bundle = mainBundle
-        val welcome = bundle.translate("welcome", json("name" to "Anna"))
+        val welcome = bundle.translate("welcome", args=json("name" to "Anna"))
         welcome shouldBe "Welcome, ${FSI}Anna${PDI}, to ${FSI}Foo 3000${PDI}!"
     }
 
     @Test
     fun testFallback() {
-        val welcome = bundles.translate("welcome", json("name" to "Anna"))
+        val welcome = bundles.translate("welcome", args = json("name" to "Anna"))
         welcome shouldBe "Welcome, ${FSI}Anna${PDI}, to ${FSI}Foo 3000${PDI}!"
-        val foo = bundles.translate("foo", null)
+        val foo = bundles.translate("foo")
         foo shouldBe "bar"
     }
 }
