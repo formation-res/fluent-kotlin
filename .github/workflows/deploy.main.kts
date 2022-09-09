@@ -55,7 +55,7 @@ val workflow = workflow(
         uses(
             name = "test & publish library package",
             action = GradleBuildActionV2(
-                arguments = "build publish --scan",
+                arguments = "clean build publish --scan",
             )
         )
 //        uses(

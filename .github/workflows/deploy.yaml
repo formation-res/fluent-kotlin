@@ -50,4 +50,4 @@ jobs:
         name: test & publish library package
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build publish --scan
+          arguments: clean build publish --scan
