@@ -63,6 +63,12 @@ kotlin {
                 implementation(kotlin("test-js"))
             }
         }
+        val jvmTest by getting {
+            dependencies {
+                runtimeOnly("org.junit.jupiter:junit-jupiter:_")
+                implementation(kotlin("test-junit"))
+            }
+        }
     }
 }
 

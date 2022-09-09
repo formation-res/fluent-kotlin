@@ -59,7 +59,7 @@ class LocaleTest {
         assertSoftly {
             localesToTest.forEach { locale ->
                 val bundleSequence = LocalizationService.loadBundleSequence(listOf(locale.id, TestLocales.EN_GB.id),fetch =fetch)
-                val bundleSequenceWithoutFallback = LocalizationService.loadBundleSequence(listOf(locale.id), fallback = null, fetch =fetch)
+                val bundleSequenceWithoutFallback = LocalizationService.loadBundleSequence(listOf(locale.id), fallbackLocale = null, fetch =fetch)
                 TL.translatables.forEach { translatable ->
                     withClue("$locale missing '${translatable.messageId}'") {
                         val message = bundleSequence.getMessage(translatable.messageId)

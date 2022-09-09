@@ -41,11 +41,11 @@ class LocalizationService(
     companion object {
         suspend fun loadBundleSequence(
             locales: List<String>,
-            fallback: String? = null,
+            fallbackLocale: String? = null,
             fetch: suspend (locale: String) -> String?
         ): BundleSequence {
-            return if (fallback != null) {
-                (locales + fallback).distinct().mapNotNull { locale ->
+            return if (fallbackLocale != null) {
+                (locales + fallbackLocale).distinct().mapNotNull { locale ->
                     loadBundle(locale, fetch)
                 }.toTypedArray()
             } else {

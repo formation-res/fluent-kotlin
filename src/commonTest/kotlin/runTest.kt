@@ -1,1 +1,1 @@
-expect fun runTest(name: String, block: suspend () -> Unit)
+expect fun runTest(name: String="test", block: suspend () -> Unit)
