@@ -16,7 +16,7 @@ plugins {
 }
 
 refreshVersions {
-//    extraArtifactVersionKeyRules(file("version_key_rules.txt"))
+    extraArtifactVersionKeyRules(file("version_key_rules.txt"))
 }
 
 // https://dev.to/jmfayard/the-one-gradle-trick-that-supersedes-all-the-others-5bpg

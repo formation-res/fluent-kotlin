@@ -65,9 +65,9 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("net.xyzsd.fluent:fluent-base:0.70")
-                implementation("net.xyzsd.fluent:fluent-functions-cldr:0.70")
-                implementation("net.xyzsd.fluent:fluent-functions-icu:0.70")
+                implementation("net.xyzsd.fluent:fluent-base:_")
+                implementation("net.xyzsd.fluent:fluent-functions-cldr:_")
+                implementation("net.xyzsd.fluent:fluent-functions-icu:_")
             }
         }
         val jvmTest by getting {
