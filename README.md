@@ -18,8 +18,10 @@ repositories {
 Then add the latest version:
 
 ```kotlin
-implementation("com.tryformation:fluent-kotlin:0.1.0")
+implementation("com.tryformation:fluent-kotlin:0.1.1")
 ```
+
+Note, check the release tags for the latest version.
 
 
 ## Background
