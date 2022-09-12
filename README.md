@@ -1,3 +1,5 @@
+[![Deploy to maven](https://github.com/formation-res/fluent-kotlin/actions/workflows/deploy.yaml/badge.svg)](https://github.com/formation-res/fluent-kotlin/actions/workflows/deploy.yaml)
+
 Fluent-kotlin is a multi platform library for kotlin that provides message formatting for project fluent style localizations.
 
 Instead of re-implementing this for platforms, this library simply adapts existing libraries for different platforms.
