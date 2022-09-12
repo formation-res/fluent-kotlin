@@ -35,7 +35,11 @@ class JavaFluentAdapter(override val locale: List<String>, private val ftlConten
     private val bundle: FluentBundle
 
     override fun translate(translatable: Translatable, args: Map<String, Any>?): String? {
-        return bundle.format(translatable.messageId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
+        return if(bundle.getMessage(translatable.messageId).isEmpty) {
+            null
+        } else {
+            bundle.format(translatable.messageId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
+        }
     }
 
     init {

@@ -11,18 +11,22 @@ actual class LocalizedTranslationBundleSequenceProvider {
         fallbackLocale: String,
         fetch: suspend (locale: String) -> String?
     ): LocalizedTranslationBundleSequence {
-        return LocalizationService.loadBundleSequence(locales, fallbackLocale, fetch).let {
-            it.map { fluentBundle ->
+        return LocalizationService.loadBundleSequence(locales, fallbackLocale, fetch).let { bs ->
+            bs.map { fluentBundle ->
                 object : LocalizedTranslationBundle {
                     override val locale: List<String> get() = fluentBundle.locales.toList()
 
                     override fun translate(translatable: Translatable, args: Map<String, Any>?): String? {
                         val jsonArgs = args.toJson()
-                        return fluentBundle.translate(translatable.messageId, jsonArgs)
+                        return try {
+                            fluentBundle.translate(translatable.messageId, jsonArgs)
+                        } catch (e: Exception) {
+                            null
+                        }
                     }
                 }
-            }.let {
-                LocalizedTranslationBundleSequence(it)
+            }.let { bundles ->
+                LocalizedTranslationBundleSequence(bundles)
             }
         }
     }

@@ -9,10 +9,10 @@ class LocalizedTranslationBundleSequence(val bundles: List<LocalizedTranslationB
      *
      * If your `LocalizedTranslationBundle` implementation supports parameters, you can pass those using the [args].
      */
-    fun translate(
+    fun format(
         translatable: Translatable,
+        args: Map<String, Any>? = null,
         fallback: String = translatable.name,
-        args: Map<String, Any>? = null
     ): TranslatedValue {
         var localeUsed = 0
         return this.bundles.firstNotNullOfOrNull {
