@@ -10,3 +10,12 @@ actual fun runTest(name: String, block: suspend () -> Unit): dynamic {
         console.log("test $name finished \n")
     }
 }
+
+fun <T> loadSuspendingThen(block: suspend () -> T, then: (T) -> Unit): dynamic {
+    return CoroutineScope(CoroutineName("run-blocking")).promise {
+//        console.log("test $name starting\n")
+        block()
+    }.then {
+        then(it)
+    }
+}

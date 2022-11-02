@@ -12,7 +12,7 @@ rootProject.name = "fluent-kotlin"
 
 plugins {
     id("com.gradle.enterprise") version "3.10.2"
-    id("de.fayard.refreshVersions") version "0.40.2"
+    id("de.fayard.refreshVersions") version "0.51.0"
 }
 
 refreshVersions {

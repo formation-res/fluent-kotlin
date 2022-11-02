@@ -7,6 +7,8 @@ enum class TestLocales(
     override val prefix: String = "locale"
 ) : Locale {
     EN_GB("en", "GB",arrayOf("en")),
+    EN_US("en", "US",arrayOf("en")),
+    DE_DE("de", "DE",arrayOf("de")),
     NL_NL("nl","NL",arrayOf("nl")),
     FR_FR("fr","FR",arrayOf("fr")),
 }

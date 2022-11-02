@@ -77,3 +77,17 @@ fun BundleSequence.translate(translatable: Translatable, args: Json? = null) : S
 fun BundleSequence.findBundle(id: String): FluentBundle? {
     return mapBundleSync(this, id)
 }
+
+fun datetimeFormatOptions(
+    vararg opts: DateTimeFormatOption
+): Json {
+    return json(
+        *opts.map { it.key to it.value }
+            .toTypedArray()
+    )
+}
+fun kotlin.js.Date.format(vararg opts: DateTimeFormatOption) =
+    FluentDateTime(this, datetimeFormatOptions(*opts))
+
+fun kotlin.js.Date.format(datetimeFormatOptions: Json) =
+    FluentDateTime(this, datetimeFormatOptions)

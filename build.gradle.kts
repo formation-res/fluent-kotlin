@@ -49,6 +49,9 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation(Testing.kotest.assertions.core)
                 implementation(KotlinX.coroutines.core)
+                implementation(KotlinX.datetime)
+                implementation(npm("@js-joda/timezone", "_"))
+//                implementation(npm("@js-joda/locale", "_"))
             }
         }
         val jsMain by getting {

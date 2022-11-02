@@ -22,3 +22,10 @@ open external class FluentBundle {
     open fun formatPattern(pattern: ComplexPattern, args: Json? /* FluentType<Any> | String | Number | Date */): String
 }
 
+
+external class FluentDateTime(
+    date: kotlin.js.Date,
+    opts: Json?
+) {
+    val opts: Json?;
+}
