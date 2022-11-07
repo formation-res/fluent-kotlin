@@ -9,6 +9,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJSDate
 import kotlin.js.json
+import kotlin.random.Random
 import kotlin.test.Test
 
 enum class BasicStrings : Translatable {
@@ -16,6 +17,7 @@ enum class BasicStrings : Translatable {
     bye,
     nope,
     wtf,
+    number,
     time,
     datetime
     ;
@@ -29,6 +31,7 @@ class LocalizationTest {
             pre-hello = Oh Hai
             pre-bye = OKAY BYE THEN!
             pre-wtf = What The Fuck
+            pre-number = { ${'$'}number }
             pre-datetime = en-GB: { ${'$'}date }
             pre-time = Today is { DATETIME(
                 ${'$'}date, 
@@ -66,7 +69,7 @@ class LocalizationTest {
     )
 
     val fetch: suspend (locale: String) -> String? = { locale ->
-        console.asDynamic().debug("fetching locale", locale)
+        console.asDynamic().debug("fetching locale: $locale")
         ftl[locale] ?: error("failed too get locale for id ${locale}")
     }
     private val localizationService = LocalizationService(
@@ -116,24 +119,49 @@ class LocalizationTest {
         println(formatted + "\n")
         formatted shouldNotBe "time"
 
-
-
-val formatted2 = english.translate(
-    time,
-    args = json(
-        "date" to datetime.toJSDate().format(
-            DateTimeFormatOption.Timezone(TimeZone.availableZoneIds.random()),
-            DateTimeFormatOption.Weekday.long,
-            DateTimeFormatOption.Year.two_digit,
-            DateTimeFormatOption.Hour.two_digit
-        ),
-        "timezone" to timezone,
-    )
-)
+        val formatted2 = english.translate(
+            time,
+            args = json(
+                "date" to datetime.toJSDate().format(
+                    DateTimeFormatOption.Timezone(TimeZone.availableZoneIds.random()),
+                    DateTimeFormatOption.Weekday.long,
+                    DateTimeFormatOption.Year.two_digit,
+                    DateTimeFormatOption.Hour.two_digit
+                ),
+                "timezone" to timezone,
+            )
+        )
         println("\n\n\n")
         println(formatted2 + "\n")
         formatted2 shouldNotBe "time"
     }
+
+
+    @Test
+    fun shouldFormatNumber() = loadSuspendingThen({
+        LocalizationService.loadBundleSequence(listOf(TestLocales.EN_GB.id), fetch = fetch)
+    }) { english ->
+
+        val value = Random.nextDouble() * 1000
+        println("\n\n\n")
+        println(value)
+
+        val opts = numberFormatOptions(
+            NumberFormatOption.Style.unit,
+            NumberFormatOption.Unit("meter")
+        )
+
+        val formatted = english.translate(
+            number,
+            args = json(
+                "number" to formatNumber(value, opts),
+            )
+        )
+        println("\n\n\n")
+        println("$value => $formatted \n")
+        formatted shouldNotBe number.name
+    }
+
     @Test
     fun translateVariousDatetimeFormats() = loadSuspendingThen({
         listOf(

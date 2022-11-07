@@ -29,3 +29,8 @@ external class FluentDateTime(
 ) {
     val opts: Json?;
 }
+
+external class FluentNumber(
+    value: Double,
+    opts: Json?
+)

@@ -86,8 +86,24 @@ fun datetimeFormatOptions(
             .toTypedArray()
     )
 }
+
 fun kotlin.js.Date.format(vararg opts: DateTimeFormatOption) =
     FluentDateTime(this, datetimeFormatOptions(*opts))
 
 fun kotlin.js.Date.format(datetimeFormatOptions: Json) =
     FluentDateTime(this, datetimeFormatOptions)
+
+fun numberFormatOptions(
+    vararg opts: NumberFormatOption
+): Json {
+    return json(
+        *opts.map { it.key to it.value }
+            .toTypedArray()
+    )
+}
+
+fun formatNumber(value: Double, vararg opts: NumberFormatOption) =
+    FluentNumber(value, numberFormatOptions(*opts))
+
+fun formatNumber(value: Double, numberFormatOptions: Json) =
+    FluentNumber(value, numberFormatOptions)
