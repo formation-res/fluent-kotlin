@@ -10,18 +10,17 @@ class JavaFluentAdapter(override val locale: List<String>, private val ftlConten
     LocalizedTranslationBundle {
     private val bundle: FluentBundle
 
+    override fun translate(translatable: Translatable, args: Map<String, Any>?): String? =
+        translate(translatable.messageId, args)
+
     override fun translate(stringId: String, args: Map<String, Any>?): String? {
-        return if(bundle.getMessage(stringId).isEmpty) {
+        return if (bundle.getMessage(stringId).isEmpty) {
             null
         } else {
             bundle.format(stringId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
         }
     }
-
-    override fun translate(translatable: Translatable, args: Map<String, Any>?): String? {
-        return translate(translatable.messageId, args)
-    }
-
+    
     init {
         val ftlResource = FTLParser.parse(FTLStream.of(ftlContent))
         val l = Locale.forLanguageTag(locale.first())
@@ -39,7 +38,7 @@ actual class LocalizedTranslationBundleSequenceProvider {
     ): LocalizedTranslationBundleSequence {
         val bundles = (locales + fallbackLocale).mapNotNull { locale ->
             fetch.invoke(locale)?.let { source ->
-                JavaFluentAdapter(listOf(locale),source)
+                JavaFluentAdapter(listOf(locale), source)
             }
         }
         return LocalizedTranslationBundleSequence(bundles)
