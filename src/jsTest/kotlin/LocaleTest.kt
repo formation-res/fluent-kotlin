@@ -20,6 +20,14 @@ class LocaleTest {
             demo-empty-search = Nothing yet. Maybe click Search?
             demo-found-results = Found {${'$'}amount} results!
         """.trimIndent(),
+        "en-US" to """
+            demo-title = Recipe Search
+            demo-cheese = Cheeze
+            demo-query = Query
+            demo-search-button = Search
+            demo-empty-search = Nada!?
+            demo-found-results = Got it {${'$'}amount} results!
+        """.trimIndent(),
         "nl-NL" to """
             demo-title = Recepten Zoeken
             demo-cheese = Kaas
@@ -28,7 +36,8 @@ class LocaleTest {
             demo-empty-search = Nog niks gevonden. Klik op Zoeken?
             demo-found-results = {${'$'}amount} resultaten gevonden!
         """.trimIndent(),
-        "fr-FR" to  "" // empty
+        "fr-FR" to  "", // empty
+        "de-DE" to  "", // empty
     )
 
     val fetch: suspend (locale: String) -> String? = { locale ->
@@ -84,7 +93,7 @@ class LocaleTest {
     fun verifyFail() = runTest("verify missing translation fails") {
         val translatable = TestTranslations.SHOULD_FAIL
         localesToTest.forEach { locale ->
-
+            console.log("Testing $locale")
             val bundle = LocalizationService.loadBundle(locale.id, fetch=fetch)
             bundle shouldNotBe null
             val bundleSequence = LocalizationService.loadBundleSequence(listOf(locale.id), fetch = fetch)
