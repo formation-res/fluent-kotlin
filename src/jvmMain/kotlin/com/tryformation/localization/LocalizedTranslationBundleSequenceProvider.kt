@@ -10,12 +10,16 @@ class JavaFluentAdapter(override val locale: List<String>, private val ftlConten
     LocalizedTranslationBundle {
     private val bundle: FluentBundle
 
-    override fun translate(translatable: Translatable, args: Map<String, Any>?): String? {
-        return if(bundle.getMessage(translatable.messageId).isEmpty) {
+    override fun translate(stringId: String, args: Map<String, Any>?): String? {
+        return if(bundle.getMessage(stringId).isEmpty) {
             null
         } else {
-            bundle.format(translatable.messageId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
+            bundle.format(stringId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
         }
+    }
+
+    override fun translate(translatable: Translatable, args: Map<String, Any>?): String? {
+        return translate(translatable.messageId, args)
     }
 
     init {
