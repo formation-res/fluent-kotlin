@@ -24,6 +24,15 @@ actual class LocalizedTranslationBundleSequenceProvider {
                             null
                         }
                     }
+
+                    override fun translate(stringId: String, args: Map<String, Any>?): String? {
+                        val jsonArgs = args.toJson()
+                        return try {
+                            fluentBundle.translate(stringId, jsonArgs)
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }
                 }
             }.let { bundles ->
                 LocalizedTranslationBundleSequence(bundles)

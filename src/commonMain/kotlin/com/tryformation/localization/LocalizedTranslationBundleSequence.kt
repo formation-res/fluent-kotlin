@@ -21,12 +21,33 @@ class LocalizedTranslationBundleSequence(val bundles: List<LocalizedTranslationB
                     translatable = translatable,
                     message = m,
                     localeUsed = it.locale.takeIf { locales -> locales.isNotEmpty() }?.first(),
-                    localeIndex = localeUsed
+                    localeIndex = localeUsed,
+                    stringId = translatable.messageId
                 )
             }.also {
                 localeUsed++
             }
         } ?: TranslatedValue(translatable, fallback, null, -1)
+    }
+
+    fun format(
+        stringId: String,
+        args: Map<String, Any>? = null,
+        fallback: String = stringId,
+    ): TranslatedValue {
+        var localeUsed = 0
+        return this.bundles.firstNotNullOfOrNull {
+            it.translate(stringId, args)?.let { m ->
+                TranslatedValue(
+                    message = m,
+                    localeUsed = it.locale.takeIf { locales -> locales.isNotEmpty() }?.first(),
+                    localeIndex = localeUsed,
+                    stringId = stringId,
+                )
+            }.also {
+                localeUsed++
+            }
+        } ?: TranslatedValue(message = fallback, localeUsed = null, localeIndex = -1, stringId = stringId)
     }
 }
 
