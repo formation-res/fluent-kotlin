@@ -12,7 +12,7 @@ data class TranslatedValue(
     val message: String,
     val localeUsed: String?,
     val localeIndex: Int,
-    val stringId: String? = translatable?.messageId,
+    val messageId: String = translatable?.messageId ?: error("messageId must be provided"),
 ) {
     val bestTranslationUsed: Boolean = localeIndex == 0
     val fallbackLocaleUsed: Boolean = localeIndex > 0

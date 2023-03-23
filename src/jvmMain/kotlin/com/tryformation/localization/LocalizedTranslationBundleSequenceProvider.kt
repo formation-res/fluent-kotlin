@@ -6,18 +6,20 @@ import fluent.syntax.parser.FTLParser
 import fluent.syntax.parser.FTLStream
 import java.util.Locale
 
-class JavaFluentAdapter(override val locale: List<String>, private val ftlContent: String) :
-    LocalizedTranslationBundle {
+class JavaFluentAdapter(
+    override val locale: List<String>,
+    private val ftlContent: String
+) : LocalizedTranslationBundle {
     private val bundle: FluentBundle
 
     override fun translate(translatable: Translatable, args: Map<String, Any>?): String? =
         translate(translatable.messageId, args)
 
-    override fun translate(stringId: String, args: Map<String, Any>?): String? {
-        return if (bundle.getMessage(stringId).isEmpty) {
+    override fun translate(messageId: String, args: Map<String, Any>?): String? {
+        return if (bundle.getMessage(messageId).isEmpty) {
             null
         } else {
-            bundle.format(stringId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
+            bundle.format(messageId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
         }
     }
     

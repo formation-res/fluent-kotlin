@@ -1,16 +1,10 @@
 #!/usr/bin/env kotlin
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.39.0")
 
-//@file:Repository("https://jitpack.io")
-//@file:DependsOn("com.github.nikkyai:github-actions-kotlin-dsl:main-SNAPSHOT")
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.21.0")
-
-import it.krzeminski.githubactions.actions.`8398a7`.ActionSlackV3
-import it.krzeminski.githubactions.actions.actions.*
-import it.krzeminski.githubactions.actions.docker.BuildPushActionV3
-import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
-import it.krzeminski.githubactions.actions.googlegithubactions.AuthV0
-import it.krzeminski.githubactions.actions.googlegithubactions.SetupGcloudV0
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
+import it.krzeminski.githubactions.actions.googlegithubactions.AuthV1
+import it.krzeminski.githubactions.actions.googlegithubactions.SetupGcloudV1
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
@@ -44,13 +38,13 @@ val workflow = workflow(
         )
         uses(
             name = "gcloud auth",
-            action = AuthV0(
+            action = AuthV1(
                 credentialsJson = expr("secrets.GOOGLE_CLOUD_KEY"),
             )
         )
         uses(
             name = "setup cloud sdk",
-            action = SetupGcloudV0()
+            action = SetupGcloudV1()
         )
         uses(
             name = "test & publish library package",
