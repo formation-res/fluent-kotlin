@@ -7,8 +7,10 @@ import io.github.typesafegithub.workflows.actions.googlegithubactions.AuthV1
 import io.github.typesafegithub.workflows.actions.googlegithubactions.SetupGcloudV1
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType
-import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.domain.triggers.Release
+import io.github.typesafegithub.workflows.dsl.expressions.Contexts.github
+import io.github.typesafegithub.workflows.dsl.expressions.Contexts.runner
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
@@ -17,8 +19,7 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 val workflow = workflow(
     name = "Deploy to maven",
     on = listOf(
-        Push(branches = listOf("main")),
-        PullRequest(branches = listOf("main"))
+        Release(),
     ),
     sourceFile = __FILE__.toPath(),
 ) {
@@ -53,7 +54,7 @@ val workflow = workflow(
         uses(
             name = "test & publish library package",
             action = GradleBuildActionV2(
-                arguments = "clean build --scan",
+                arguments = "-Pversion=${expr(github.ref)} clean publish --scan",
             )
         )
     }
