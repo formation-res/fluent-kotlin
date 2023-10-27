@@ -73,7 +73,7 @@ class LocalizationTest {
         ftl[locale] ?: error("failed too get locale for id ${locale}")
     }
     private val localizationService = LocalizationService(
-        locales = TestLocales.values(),
+        locales = TestLocales.entries.toTypedArray(),
         fetch = fetch
     )
 
@@ -180,9 +180,7 @@ class LocalizationTest {
         println(instant.toString() + "\n")
 //        println(timezone + "\n")
 
-        val date = instant.toJSDate()
-
-        val formats = listOf(
+        listOf(
             setOf(
                 DateTimeFormatOption.DateStyle.full,
                 DateTimeFormatOption.TimeStyle.full,

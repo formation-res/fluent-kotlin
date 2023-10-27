@@ -22,12 +22,12 @@ repositories {
 kotlin {
     js(IR) {
         browser {
-            testTask {
+            testTask(Action {
                 useKarma {
                     useSourceMapSupport()
                     useChromeHeadless()
                 }
-            }
+            })
         }
     }
     jvm {}

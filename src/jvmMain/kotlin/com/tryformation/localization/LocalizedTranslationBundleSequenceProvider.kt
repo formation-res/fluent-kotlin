@@ -22,7 +22,7 @@ class JavaFluentAdapter(
             bundle.format(messageId, args?.toMutableMap() ?: mutableMapOf<String, Any>())
         }
     }
-    
+
     init {
         val ftlResource = FTLParser.parse(FTLStream.of(ftlContent))
         val l = Locale.forLanguageTag(locale.first())
