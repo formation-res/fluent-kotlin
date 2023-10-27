@@ -4,7 +4,9 @@
 
 name: 'Deploy to maven'
 on:
-  release: {}
+  release:
+    types:
+    - 'published'
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'

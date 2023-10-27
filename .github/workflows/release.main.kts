@@ -19,7 +19,9 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 val workflow = workflow(
     name = "Deploy to maven",
     on = listOf(
-        Release(),
+        Release(mapOf(
+            "types" to listOf("published")
+        )),
     ),
     sourceFile = __FILE__.toPath(),
 ) {

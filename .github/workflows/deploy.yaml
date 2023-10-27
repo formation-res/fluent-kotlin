@@ -50,7 +50,7 @@ jobs:
       name: 'setup cloud sdk'
       uses: 'google-github-actions/setup-gcloud@v1'
     - id: 'step-4'
-      name: 'test & publish library package'
+      name: 'test'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: 'clean build --scan'

@@ -51,7 +51,7 @@ val workflow = workflow(
             action = SetupGcloudV1()
         )
         uses(
-            name = "test & publish library package",
+            name = "test",
             action = GradleBuildActionV2(
                 arguments = "clean build --scan",
             )
