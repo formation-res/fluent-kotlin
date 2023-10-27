@@ -50,4 +50,4 @@ jobs:
       name: 'test & publish library package'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: '-Pversion=${{ github.ref }} clean publish --scan'
+        arguments: '-Pversion=${{ github.ref_name }} clean publish --scan'
