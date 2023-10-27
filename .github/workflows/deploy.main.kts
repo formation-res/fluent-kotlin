@@ -1,16 +1,17 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.39.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.googlegithubactions.AuthV1
-import it.krzeminski.githubactions.actions.googlegithubactions.SetupGcloudV1
-import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.expressions.expr
-import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.writeToFile
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
+import io.github.typesafegithub.workflows.actions.googlegithubactions.AuthV1
+import io.github.typesafegithub.workflows.actions.googlegithubactions.SetupGcloudV1
+import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
+import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.expr
+import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.writeToFile
+
 
 val workflow = workflow(
     name = "Deploy to maven",
@@ -25,7 +26,7 @@ val workflow = workflow(
     ) {
         uses(
             name = "checkout",
-            action = CheckoutV3()
+            action = CheckoutV4()
         )
         uses(
             name = "setup jdk",
@@ -33,7 +34,8 @@ val workflow = workflow(
                 javaPackage = SetupJavaV3.JavaPackage.Jdk,
                 javaVersion = "17",
                 architecture = "x64",
-                distribution = SetupJavaV3.Distribution.Adopt
+                distribution = SetupJavaV3.Distribution.Adopt,
+                cache = SetupJavaV3.BuildPlatform.Gradle
             )
         )
         uses(
@@ -52,19 +54,6 @@ val workflow = workflow(
                 arguments = "clean build publish --scan",
             )
         )
-//        uses(
-//            name = "slack notification",
-//            action = ActionSlackV3(
-//                status = ActionSlackV3.Status.Custom(expr("job.status")),
-//                fields = listOf(
-//                    "repo", "message", "author", "eventName", "ref", "workflow", "took"
-//                ),
-//                authorName = "api-client published"
-//            ),
-//            env = linkedMapOf(
-//                "SLACK_WEBHOOK_URL" to expr("secrets.SLACK_HOOK")
-//            )
-//        )
     }
 }
 workflow.writeToFile(addConsistencyCheck = true)
