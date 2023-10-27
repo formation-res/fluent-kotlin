@@ -54,7 +54,7 @@ val workflow = workflow(
         uses(
             name = "test & publish library package",
             action = GradleBuildActionV2(
-                arguments = "-Pversion=${expr(github.ref)} clean publish --scan",
+                arguments = "-Pversion=${expr(github.ref).substringAfterLast('/')} clean publish --scan",
             )
         )
     }
