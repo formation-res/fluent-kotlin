@@ -22,12 +22,12 @@ repositories {
 kotlin {
     js(IR) {
         browser {
-            testTask(Action {
+            testTask {
                 useKarma {
                     useSourceMapSupport()
                     useChromeHeadless()
                 }
-            })
+            }
         }
     }
     jvm {}
@@ -37,13 +37,13 @@ kotlin {
             languageSettings.optIn("kotlin.RequiresOptIn")
             languageSettings.optIn("kotlin.time.ExperimentalTime")
         }
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(kotlin("stdlib"))
 //                implementation(KotlinX.coroutines.core)
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
@@ -54,26 +54,26 @@ kotlin {
 //                implementation(npm("@js-joda/locale", "_"))
             }
         }
-        val jsMain by getting {
+        jsMain {
             dependencies {
                 implementation(npm("@fluent/bundle", "_"))
                 implementation(npm("@fluent/sequence", "_"))
             }
         }
 
-        val jsTest by getting {
+        jsTest {
             dependencies {
                 implementation(kotlin("test-js"))
             }
         }
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
                 implementation("net.xyzsd.fluent:fluent-base:_")
                 implementation("net.xyzsd.fluent:fluent-functions-cldr:_")
                 implementation("net.xyzsd.fluent:fluent-functions-icu:_")
             }
         }
-        val jvmTest by getting {
+        jvmTest {
             dependencies {
                 runtimeOnly("org.junit.jupiter:junit-jupiter:_")
                 implementation(kotlin("test-junit"))

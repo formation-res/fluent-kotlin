@@ -3,6 +3,7 @@ package com.tryformation.localization
 /**
  * This provider class should load translation bundles based on the user's prefered locales.
  */
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class LocalizedTranslationBundleSequenceProvider {
     /**
      * Loads a bundle sequence. You specify the [locales] and a [fallbackLocale]

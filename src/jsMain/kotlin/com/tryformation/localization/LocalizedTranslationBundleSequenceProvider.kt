@@ -25,6 +25,7 @@ class JsFluentBundle(
     }
 }
 
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class LocalizedTranslationBundleSequenceProvider {
     actual suspend fun loadBundleSequence(
         locales: List<String>,
