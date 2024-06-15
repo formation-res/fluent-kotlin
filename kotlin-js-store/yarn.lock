@@ -12,15 +12,15 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@fluent/bundle@0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@fluent/bundle/-/bundle-0.17.1.tgz#239388f55f115dca593f268d48a5ab8936dc9556"
-  integrity sha512-CRFNT9QcSFAeFDneTF59eyv3JXFGhIIN4boUO2y22YmsuuKLyDk+N1I/NQUYz9Ab63e6V7T6vItoZIG/2oOOuw==
+"@fluent/bundle@0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@fluent/bundle/-/bundle-0.18.0.tgz#bf67e306719a33baf3b66c88af5ac427d7800dbd"
+  integrity sha512-8Wfwu9q8F9g2FNnv82g6Ch/E1AW1wwljsUOolH5NEtdJdv0sZTuWvfCM7c3teB9dzNaJA8rn4khpidpozHWYEA==
 
-"@fluent/sequence@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@fluent/sequence/-/sequence-0.7.0.tgz#2fbfa872e87293cca209ba4a586d1a8fbaa2e5c4"
-  integrity sha512-aH1xMwX8DFvKOQSKUKpB3zMsnJ2rRKt7MajLNnx/r3V3DWDo2nzEfm21d7UyOgwEckPIjPmhxdW1MEmsGUxYIw==
+"@fluent/sequence@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@fluent/sequence/-/sequence-0.8.0.tgz#dd3da353a0635f1efa5f27e6d4fc59e01f162372"
+  integrity sha512-eV5QlEEVV/wR3AFQLXO67x4yPRPQXyqke0c8yucyMSeW36B3ecZyVFlY1UprzrfFV8iPJB4TAehDy/dLGbvQ1Q==
 
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"
@@ -85,10 +85,10 @@
   resolved "https://registry.yarnpkg.com/@js-joda/core/-/core-3.2.0.tgz#3e61e21b7b2b8a6be746df1335cf91d70db2a273"
   integrity sha512-PMqgJ0sw5B7FKb2d5bWYIoxjri+QlW/Pys7+Rw82jSH0QN3rB05jZ/VrrsUdh1w4+i2kw9JOejXGq/KhDOX7Kg==
 
-"@js-joda/timezone@2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@js-joda/timezone/-/timezone-2.15.0.tgz#1bf25bed68ba93c858142fac0a4b9180efae5a0d"
-  integrity sha512-J7afu2PNR71IUvhZW4IBX+BpuuTESk9A1UklZz6T3g3yBsVER60lLueHop1iMXbqnTh85qPQ7NVRbgSYKK4BcA==
+"@js-joda/timezone@2.21.0":
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/@js-joda/timezone/-/timezone-2.21.0.tgz#78b2bbddb8456f935415188b3101c40c98150262"
+  integrity sha512-doyzPp6jqVow/eE7jG7yP4jNOmtzRAyIby5bzv3MDYzZ0yJlSVrM+LhTnmGTmxcgooqbLcqWymix+v4yUnNhPw==
 
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.2"
