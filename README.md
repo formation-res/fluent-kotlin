@@ -7,6 +7,15 @@ Instead of re-implementing this for platforms, this library simply adapts existi
 - For javascript we use [fluent.js](https://github.com/projectfluent/fluent.js/)
 - On the jvm we use [xyzsd/fluent](https://github.com/xyzsd/fluent). This is a functional but not fully complete implementation; so your mileage may vary.
 
+## Fluent AI
+
+Check out our new AI powered translation tool: [Fluent AI](https://fluent-ai.jillesvangurp.com). We wrote this tool to manage our project fluent translation tools. And of course it's a multiplatform Kotlin library that uses fluent-kotlin for its translations. 
+
+- Edit language strings for different languages side by side
+- Easily identify missing translations and use AI to add the missing ones.
+- Add entire new languages with translations fully automatically
+- Sort and organize your translation strings and eliminate copy pasted identical translations
+
 ## Gradle
 
 Add the [tryformation](https://tryformation.com) maven repository:
