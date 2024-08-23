@@ -9,7 +9,7 @@ Instead of re-implementing this for platforms, this library simply adapts existi
 
 ## Fluent AI
 
-Check out our new AI powered translation tool: [Fluent AI](https://fluent-ai.jillesvangurp.com). We wrote this tool to manage our project fluent translation tools. And of course it's a multiplatform Kotlin library that uses fluent-kotlin for its translations. So, it serves as a nice example of how to use fluent-kotlin as well. You can dive into the source code [here](https://github.com/jillesvangurp/fluent-ai).
+Check out our new AI powered translation tool: [Fluent AI](https://fluent-ai.jillesvangurp.com). We wrote this tool to manage our project fluent translation tools. And of course it's a kotlin-js applications that uses fluent-kotlin for its translations. So, it serves as a nice example of how to use fluent-kotlin as well. You can dive into the source code [here](https://github.com/jillesvangurp/fluent-ai).
 
 - Edit language strings for different languages side by side
 - Easily identify missing translations and use AI to add the missing ones.
