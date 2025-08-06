@@ -21,4 +21,11 @@ interface Translatable {
                 s
             }
         }).replace('_', '-').lowercase()
+
+    val defaultTranslation: String get() {
+        val postFix = messageId.replace("$prefix-", "")
+
+        return postFix.split('-') // Split on CamelCase or underscore
+            .joinToString(" ") { it.lowercase().replaceFirstChar { char -> char.uppercase() } }
+    }
 }
