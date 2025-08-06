@@ -1,16 +1,26 @@
-import BasicStrings.*
-import com.tryformation.fluent.*
+import BasicStrings.bye
+import BasicStrings.datetime
+import BasicStrings.nope
+import BasicStrings.number
+import BasicStrings.time
+import BasicStrings.wtf
+import com.tryformation.fluent.DateTimeFormatOption
+import com.tryformation.fluent.NumberFormatOption
+import com.tryformation.fluent.format
+import com.tryformation.fluent.formatNumber
+import com.tryformation.fluent.numberFormatOptions
+import com.tryformation.fluent.translate
 import com.tryformation.localization.LocalizationService
 import com.tryformation.localization.Translatable
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toJSDate
 import kotlin.js.json
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.time.Clock
+import kotlin.time.toJSDate
+import kotlinx.datetime.TimeZone
 
 enum class BasicStrings : Translatable {
     hello,
