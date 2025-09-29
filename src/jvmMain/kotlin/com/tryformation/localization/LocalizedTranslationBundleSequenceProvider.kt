@@ -1,7 +1,7 @@
 package com.tryformation.localization
 
 import fluent.bundle.FluentBundle
-import fluent.functions.cldr.CLDRFunctionFactory
+import fluent.functions.icu.ICUFunctionFactory
 import fluent.syntax.parser.FTLParser
 import fluent.syntax.parser.FTLStream
 import java.util.Locale
@@ -26,8 +26,8 @@ class JavaFluentAdapter(
     init {
         val ftlResource = FTLParser.parse(FTLStream.of(ftlContent))
         val l = Locale.forLanguageTag(locale.first())
-        bundle = FluentBundle
-            .builder(l, CLDRFunctionFactory.INSTANCE).addResource(ftlResource)
+        bundle = FluentBundle.builder(l, ICUFunctionFactory.INSTANCE)
+            .addResource(ftlResource)
             .build()
     }
 }
