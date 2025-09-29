@@ -22,10 +22,33 @@ interface Translatable {
             }
         }).replace('_', '-').lowercase()
 
-    val defaultTranslation: String get() {
-        val postFix = messageId.replace("$prefix-", "")
+    /**
+     * Falback if no translation is found.
+     */
+    val defaultTranslation: String
+        get() {
+            val postFix = messageId.replace("$prefix-", "")
 
-        return postFix.split('-') // Split on CamelCase or underscore
-            .joinToString(" ") { it.lowercase().replaceFirstChar { char -> char.uppercase() } }
-    }
+            return postFix.split('-') // Split on CamelCase or underscore
+                .joinToString(" ") { it.lowercase().replaceFirstChar { char -> char.uppercase() } }
+        }
+}
+
+/**
+ * Useful on enums or other translatable constants. Allows you to have a sane default translation in code and fall back
+ * to fluent files otherwise.
+ *
+ * Note. Any translation file for the locale will still override the default in code.
+ */
+interface TranslatableWithDefault : Translatable {
+
+    val localizedDefaultTranslation: String?
+    val locale: String get() = "en_GB"
+
+    override val prefix: String
+        get() = this::class.simpleName?.camelCase2SnakeCase()
+            ?: error("no class name, don't use anonymous objects with TranslatableWithDefault")
+
+    override val defaultTranslation: String
+        get() = localizedDefaultTranslation ?: super.defaultTranslation
 }

@@ -12,7 +12,7 @@ class LocalizedTranslationBundleSequence(val bundles: List<LocalizedTranslationB
     fun format(
         translatable: Translatable,
         args: Map<String, Any>? = null,
-        fallback: String = translatable.name,
+        fallback: String = translatable.defaultTranslation,
     ): TranslatedValue {
         var localeUsed = 0
         return this.bundles.firstNotNullOfOrNull {
